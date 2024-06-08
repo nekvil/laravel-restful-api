@@ -1,0 +1,297 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Notebook API",
+        "description": "This is the API documentation for the Notebook application",
+        "version": "0.0.1"
+    },
+    "servers": [
+        {
+            "url": "/api/v1",
+            "description": "API server"
+        }
+    ],
+    "paths": {
+        "/notebook": {
+            "get": {
+                "tags": [
+                    "Notebooks"
+                ],
+                "summary": "Get list of notebooks",
+                "operationId": "d08559fcae8b9b6b25747533ba924cc6",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotebookResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Notebooks"
+                ],
+                "summary": "Create a new notebook",
+                "operationId": "09b50604f54eea208de3bb489cdc2a95",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreNotebookRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Notebook created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotebookResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/notebook/{id}": {
+            "get": {
+                "tags": [
+                    "Notebooks"
+                ],
+                "summary": "Get a notebook by ID",
+                "operationId": "ca8fa3795c051aa82157b27982d8f7ce",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotebookResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Notebook not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Notebooks"
+                ],
+                "summary": "Update a notebook",
+                "operationId": "9c63754f7ecf02301842f654cc77c3a9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateNotebookRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Notebook updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotebookResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Notebook not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Notebooks"
+                ],
+                "summary": "Delete a notebook",
+                "operationId": "d120841256f16aec86b6b8a982731e8f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Notebook deleted successfully"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "StoreNotebookRequest": {
+                "required": [
+                    "full_name",
+                    "phone",
+                    "email"
+                ],
+                "properties": {
+                    "full_name": {
+                        "type": "string",
+                        "example": "Ivan Ivanov"
+                    },
+                    "company": {
+                        "type": "string",
+                        "example": "Company ABC"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "+79151234567"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "ivan.ivanov@test.com"
+                    },
+                    "birth_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "01.01.1999"
+                    },
+                    "photo": {
+                        "type": "string",
+                        "example": "path/to/photo.jpg"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateNotebookRequest": {
+                "properties": {
+                    "full_name": {
+                        "type": "string",
+                        "example": "Ivan Ivanov"
+                    },
+                    "company": {
+                        "type": "string",
+                        "example": "Company ABC"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "+79151234567"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "ivan.ivanov@test.com"
+                    },
+                    "birth_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "01.01.1999"
+                    },
+                    "photo": {
+                        "type": "string",
+                        "example": "path/to/photo.jpg"
+                    }
+                },
+                "type": "object"
+            },
+            "NotebookResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "full_name": {
+                        "type": "string",
+                        "example": "Ivan Ivanov"
+                    },
+                    "company": {
+                        "type": "string",
+                        "example": "Company ABC"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "+79151234567"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "ivan.ivanov@test.com"
+                    },
+                    "birth_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "01.01.1999"
+                    },
+                    "photo": {
+                        "type": "string",
+                        "example": "path/to/photo.jpg"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
